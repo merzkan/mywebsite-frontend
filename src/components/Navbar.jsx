@@ -1,0 +1,133 @@
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation(); // Mevcut URL bilgisini alıyoruz
+  const path = location.pathname; // örn: "/blog", "/project/1"
+
+  // Linkin aktif olup olmadığını kontrol eden akıllı fonksiyon
+  const checkActive = (route) => {
+    // Ana sayfa için tam eşleşme gerekir
+    if (route === '/') return path === '/';
+    // Diğer sayfalar için "ile başlıyorsa" mantığı (örn: /blog/5 de Blog'u yakar)
+    return path.startsWith(route);
+  };
+
+  // Aktiflik durumuna göre class döndüren fonksiyon
+  const getLinkClass = (route) => {
+    const baseClass = "text-sm font-medium transition duration-300 ";
+    const activeClass = "text-blue-400 font-bold border-b-2 border-blue-400 pb-1"; // Seçili ise Mavi ve Altı Çizgili
+    const inactiveClass = "text-gray-300 hover:text-white hover:scale-105 transform"; // Değilse Gri
+
+    return baseClass + (checkActive(route) ? activeClass : inactiveClass);
+  };
+
+  // Mobil menü için class yapısı (biraz daha farklı tasarım)
+  const getMobileLinkClass = (route) => {
+    const baseClass = "block px-3 py-2 rounded-md text-base font-medium transition ";
+    return checkActive(route) 
+      ? baseClass + "bg-gray-900 text-white border-l-4 border-blue-500" // Aktifse koyu arka plan
+      : baseClass + "text-gray-300 hover:bg-gray-700 hover:text-white";
+  };
+
+  return (
+    <nav className="bg-gray-900 text-white p-4 shadow-lg sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center">
+        
+        {/* LOGO */}
+        <Link to="/" className="text-2xl font-bold tracking-wider cursor-pointer flex items-center gap-2">
+          <img src="/logo.png" alt="" className='w-10 md:w-10 transition-all duration-300 hover:scale-110 hover:-rotate-12 hover:drop-shadow-[0_0_10px_rgba(238,129,50,0.8)]'/>Merzkan
+        </Link>
+
+        {/* --- DESKTOP MENÜ (Bilgisayar) --- */}
+        <div className="hidden md:flex space-x-8 items-center">
+          {/* Linkler */}
+          <div className="flex space-x-6 mt-2">
+            <Link to="/" className={getLinkClass('/')}>Ana Sayfa</Link>
+            <Link to="/blog" className={getLinkClass('/blog')}>Yazılar</Link>
+            <Link to="/project" className={getLinkClass('/project')}>Projeler</Link>
+            <Link to="/about" className={getLinkClass('/about')}>Hakkımda</Link>
+          </div>
+          
+          <div className="h-6 w-px bg-gray-700"></div>
+          
+          {/* Giriş ve Kayıt Alanı */}
+          <div className="flex items-center space-x-4">
+            <Link to="/login" className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-bold hover:bg-gray-100 transition shadow-lg transform hover:-translate-y-0.5">
+              Giriş Yap
+            </Link>
+            <Link 
+              to="/register" 
+              className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-bold hover:bg-gray-100 transition shadow-lg transform hover:-translate-y-0.5"
+            >
+              Kayıt Ol
+            </Link>
+          </div>
+        </div>
+
+        {/* --- MOBİL HAMBURGER BUTONU (Telefon) --- */}
+        <button 
+          className="md:hidden focus:outline-none text-gray-300 hover:text-white" 
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* --- MOBİL MENÜ LİSTESİ --- */}
+      {isOpen && (
+        <div className="md:hidden mt-4 bg-gray-800 rounded-xl p-4 shadow-2xl border border-gray-700 animate-fade-in-down">
+          <div className="flex flex-col space-y-3">
+            <Link to="/" onClick={() => setIsOpen(false)} className={getMobileLinkClass('/')}>
+                Ana Sayfa
+            </Link>
+          </div>
+          
+          <div className="border-t border-gray-700 my-4"></div>
+
+          <div className="flex flex-col space-y-2">
+            <Link to="/blog" onClick={() => setIsOpen(false)} className={getMobileLinkClass('/blog')}>
+              Yazılar
+            </Link>
+            <Link to="/project" onClick={() => setIsOpen(false)} className={getMobileLinkClass('/project')}>
+              Projeler
+            </Link>
+            <Link to="/about" onClick={() => setIsOpen(false)} className={getMobileLinkClass('/about')}>
+              Hakkımda
+            </Link>
+          </div>
+          
+          {/* Ayırıcı Çizgi */}
+          <div className="border-t border-gray-700 my-4"></div>
+
+          {/* Mobil Butonlar */}
+          <div className="flex flex-col space-y-3">
+            <Link 
+              to="/login" 
+              onClick={() => setIsOpen(false)} 
+              className="text-center text-gray-300 hover:text-white py-2 font-medium"
+            >
+              Giriş Yap
+            </Link>
+            <Link 
+              to="/register" 
+              onClick={() => setIsOpen(false)} 
+              className="text-center text-gray-300 hover:text-white py-2 font-medium"
+            >
+              Kayıt Ol
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
+  )
+}
+
+export default Navbar
