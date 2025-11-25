@@ -11,27 +11,71 @@ import Project from "./pages/Project/Project"
 import ProjectDetail from "./pages/Project/ProjectDetail"
 import ForgotPassword from "./pages/Account/ForgotPassword"
 import ScrollToTop from "./utilities/ScrollToTop"
+import { ProjectProvider } from './context/ProjectContext';
+import { BlogProvider } from './context/BlogContext'
+import Dashboard from "./pages/Admin/Dashboard"
+import PrivateRoute from './components/Protection/PrivateRoute'
+import PublicRoute from './components/Protection/PublicRoute'
+import UserSetting from './pages/Setting/UserSetting'
+import UserRoute from './components/Protection/UserRoute'
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <ScrollToTop />
-      <Navbar />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} /> 
-          <Route path="/blog/:id" element={<BlogDetail />} /> 
-          <Route path="/project" element={<Project />} /> 
-          <Route path="/project/:id" element={<ProjectDetail />} /> 
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <ProjectProvider>
+      <BlogProvider>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+          <ScrollToTop />
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              {/* --- HERKESE AÇIK SAYFALAR --- */}
+              <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<Blog />} /> 
+              <Route path="/blog/:id" element={<BlogDetail />} /> 
+              <Route path="/project" element={<Project />} /> 
+              <Route path="/project/:id" element={<ProjectDetail />} /> 
+              <Route path="/about" element={<About />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              
+              <Route 
+                path="/setting" 
+                element={
+                  <UserRoute>
+                    <UserSetting />
+                  </UserRoute>
+                } 
+              />
+
+              <Route 
+                path="/login" 
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                } 
+              />
+              <Route 
+                path="/register" 
+                element={
+                  <PublicRoute>
+                    <Register />
+                  </PublicRoute>
+                } 
+              />
+              <Route 
+                path="/admin/dashboard" 
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                } 
+              />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BlogProvider>
+    </ProjectProvider>
   )
 }
 

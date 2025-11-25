@@ -1,8 +1,32 @@
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/BlogCard'
 import ProjectCard from '../components/ProjectCard'
+import { useBlogContext } from '../context/BlogContext'
+import { useProjectContext } from '../context/ProjectContext'
 
 const Home = () => {
+  const { allProjects, loading: loadingProjects, error: errorProjects } = useProjectContext();
+  const { allBlogs, loading: loadingBlogs, error: errorBlogs } = useBlogContext();
+  const isLoading = loadingProjects || loadingBlogs;
+
+  // --- DEĞİŞİKLİK BURADA ---
+  // 1. Önce verileri filtrele (Sadece yayınlananlar)
+  const publishedProjects = allProjects ? allProjects.filter(p => p.isPublished === true) : [];
+  const publishedBlogs = allBlogs ? allBlogs.filter(b => b.isPublished === true) : [];
+
+  // 2. Filtrelenmiş listeden ilk 3 tanesini al
+  const latestProjects = publishedProjects.slice(0, 3);
+  const latestBlogs = publishedBlogs.slice(0, 3);
+  // -------------------------
+
+  if (isLoading) {
+      return <div className="text-center py-40 text-xl font-medium">Veriler yükleniyor...</div>;
+  }
+  if (errorProjects || errorBlogs) {
+      const errorMessage = errorProjects || errorBlogs || "Veriler yüklenirken bir hata oluştu.";
+      return <div className="text-center py-40 text-red-600 text-xl font-medium">{errorMessage}</div>;
+  }
+
   return (
     <div>
       {/* HERO SECTION: Vitrin Alanı */}
@@ -23,10 +47,9 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Sağ: Görsel Alanı (İleride kendi fotonu koyarsın) */}
+          {/* Sağ: Görsel Alanı */}
           <div className="md:w-1/2 flex justify-center">
             <div className="relative w-80 h-80 md:w-96 md:h-96 bg-blue-100 rounded-full flex items-center justify-center overflow-hidden shadow-2xl">
-              {/* Buraya kendi fotoğrafını koyabilirsin, şimdilik placeholder */}
               <img 
                 src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
                 alt="Profil" 
@@ -42,19 +65,16 @@ const Home = () => {
         <div className="container mx-auto px-4">
            <h2 className="text-2xl font-bold text-center mb-10">Nelerden Bahsediyorum?</h2>
            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Kutu 1 */}
               <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center">
                 <div className="text-4xl mb-4">⚛️</div>
                 <h3 className="font-bold text-xl mb-2">Frontend</h3>
                 <p className="text-gray-500 text-sm">React, Vue, Tailwind CSS ve modern UI tasarımları.</p>
               </div>
-              {/* Kutu 2 */}
               <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center">
                 <div className="text-4xl mb-4">🚀</div>
                 <h3 className="font-bold text-xl mb-2">Backend</h3>
                 <p className="text-gray-500 text-sm">Node.js, MongoDB ve API mimarileri üzerine notlar.</p>
               </div>
-              {/* Kutu 3 */}
               <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center">
                 <div className="text-4xl mb-4">💡</div>
                 <h3 className="font-bold text-xl mb-2">Kariyer</h3>
@@ -64,32 +84,40 @@ const Home = () => {
         </div>
       </section>
 
-      {/* SON YAZILAR (Sadece 3 tane) */}
+      {/* SON YAZILAR (Sadece Yayınlanan İlk 3) */}
       <section className="container mx-auto px-4 py-20">
         <div className="flex justify-between items-end mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Son Yazılar</h2>
           <Link to="/blog" className="text-blue-600 font-semibold hover:underline">Tümünü Gör →</Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-        </div>
+        {latestBlogs.length === 0 ? (
+          <div className="text-center text-lg text-gray-500 py-8">Henüz yayınlanmış yazı bulunmamaktadır.</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {latestBlogs.map((blog) => (
+              <BlogCard key={blog._id} blog={blog} />
+            ))}
+          </div>
+        )}
       </section>
 
-      {/* SON PROJELER (Sadece 3 tane) */}
+      {/* SON PROJELER (Sadece Yayınlanan İlk 3) */}
       <section className="container mx-auto px-4 py-20">
         <div className="flex justify-between items-end mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Son Projeler</h2>
           <Link to="/project" className="text-blue-600 font-semibold hover:underline">Tümünü Gör →</Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
-        </div>
+        {latestProjects.length === 0 ? (
+          <div className="text-center text-lg text-gray-500 py-8">Henüz yayınlanmış proje bulunmamaktadır.</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {latestProjects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   )

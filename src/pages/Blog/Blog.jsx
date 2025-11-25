@@ -1,7 +1,20 @@
 import BlogCard from '../../components/BlogCard';
+import { useBlogContext } from '../../context/BlogContext';
+
 const Blog = () => {
-  // Şimdilik sahte veri
-  const posts = [1, 2, 3, 4, 5, 6]; 
+  const { allBlogs, loading, error } = useBlogContext();
+
+  // --- DEĞİŞİKLİK BURADA BAŞLIYOR ---
+  // Tüm bloglar arasından sadece isPublished: true olanları alıyoruz.
+  const publishedBlogs = allBlogs.filter(blog => blog.isPublished === true);
+  // -----------------------------------
+
+  if (loading) {
+    return <div className="text-center py-20 text-xl font-medium">Yazılar Yükleniyor...</div>;
+  }
+  if (error) {
+    return <div className="text-center py-20 text-red-600 text-xl font-medium">{error}</div>;
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen pb-12">
@@ -29,14 +42,19 @@ const Blog = () => {
 
       {/* Yazı Listesi */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((item) => (
-            <BlogCard key={item} id={item}/>
-          ))}
-        </div>
+        {/* Kontrolü ve Map işlemini publishedBlogs üzerinden yapıyoruz */}
+        {publishedBlogs.length === 0 ? (
+          <div className="text-center text-lg text-gray-500">Henüz yayınlanmış bir yazı bulunmamaktadır.</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {publishedBlogs.map((blog) => (
+              <BlogCard key={blog._id} blog={blog}/> 
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
-export default Blog
+export default Blog;
