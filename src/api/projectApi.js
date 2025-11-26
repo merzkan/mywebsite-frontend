@@ -25,7 +25,6 @@ export const getProjectById = async (id) => {
 
 export const createProject = async (projectData) => {
     try {
-        // Admin yetkisi için Token
         const user = JSON.parse(localStorage.getItem("user"));
         const config = {
             headers: { token: user?.token } 
@@ -39,16 +38,13 @@ export const createProject = async (projectData) => {
     }
 };
 
-// 2. Proje Silme (İstediğin fonksiyon)
 export const deleteProject = async (id) => {
     try {
-        // Admin yetkisi için Token alıyoruz
         const user = JSON.parse(localStorage.getItem("user"));
         const config = {
             headers: { token: user?.token } 
         };
 
-        // Backend rotana göre: genellikle DELETE isteği /projects/:id adresine atılır
         const response = await axios.delete(`${API_BASE_URL}/projects/${id}`, config);
         return response.data;
     } catch (error) {
@@ -57,7 +53,6 @@ export const deleteProject = async (id) => {
     }
 };
 
-// 3. Proje Güncelleme (React tarafında düzenle butonu için gerekli)
 export const updateProject = async (id, updatedData) => {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -65,7 +60,6 @@ export const updateProject = async (id, updatedData) => {
             headers: { token: user?.token } 
         };
 
-        // PUT isteği: URL, Data, Config sırasıyla gönderilir
         const response = await axios.put(`${API_BASE_URL}/projects/${id}`, updatedData, config);
         return response.data;
     } catch (error) {

@@ -4,8 +4,6 @@ import { useBlogContext } from '../../context/BlogContext';
 const Blog = () => {
   const { allBlogs, loading, error } = useBlogContext();
 
-  // --- DEĞİŞİKLİK BURADA BAŞLIYOR ---
-  // Tüm bloglar arasından sadece isPublished: true olanları alıyoruz.
   const publishedBlogs = allBlogs.filter(blog => blog.isPublished === true);
   // -----------------------------------
 
@@ -42,7 +40,6 @@ const Blog = () => {
 
       {/* Yazı Listesi */}
       <div className="container mx-auto px-4 py-12">
-        {/* Kontrolü ve Map işlemini publishedBlogs üzerinden yapıyoruz */}
         {publishedBlogs.length === 0 ? (
           <div className="text-center text-lg text-gray-500">Henüz yayınlanmış bir yazı bulunmamaktadır.</div>
         ) : (

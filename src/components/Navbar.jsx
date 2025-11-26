@@ -83,8 +83,6 @@ const Navbar = () => {
                     {user.role === "admin" ? (
                       <Link 
                         to="/admin/dashboard" 
-                        // DÜZELTME: Çıkış butonuyla aynı class yapıları (px-4 py-2 rounded-lg) verildi.
-                        // Sadece renkler farklı: Kırmızı zemin, beyaz yazı.
                         className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition shadow-sm"
                       >
                         Admin
@@ -168,7 +166,6 @@ const Navbar = () => {
                     Admin Paneli
                   </Link>
                 ) : (
-                  // Mobil için buton stili (Koyu tema uyumlu)
                   <Link to="/setting" onClick={() => setIsOpen(false)} className="text-center bg-gray-700 text-gray-300 hover:text-white py-2 rounded-lg font-medium transition">
                     Ayarlar
                   </Link>

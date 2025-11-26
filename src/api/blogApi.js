@@ -25,7 +25,6 @@ export const getBlogById = async (id) => {
 
 export const createBlog = async (blogData) => {
     try {
-        // Admin olduğunu kanıtlamak için Token'ı al
         const user = JSON.parse(localStorage.getItem("user"));
         const config = {
             headers: { token: user?.token } 
@@ -35,12 +34,10 @@ export const createBlog = async (blogData) => {
         return response.data;
     } catch (error) {
         console.error("Blog oluşturulurken hata:", error);
-        // Hatayı fırlat ki frontend'de yakalayabilelim
         throw error.response?.data || error.message;
     }
 };
 
-// 2. Blog Silme (YENİ)
 export const deleteBlog = async (id) => {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -48,7 +45,6 @@ export const deleteBlog = async (id) => {
             headers: { token: user?.token } 
         };
 
-        // DELETE isteği
         const response = await axios.delete(`${API_BASE_URL}/blogs/${id}`, config);
         return response.data;
     } catch (error) {
@@ -57,7 +53,6 @@ export const deleteBlog = async (id) => {
     }
 };
 
-// 3. Blog Güncelleme (YENİ)
 export const updateBlog = async (id, updatedData) => {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -65,7 +60,6 @@ export const updateBlog = async (id, updatedData) => {
             headers: { token: user?.token } 
         };
 
-        // PUT isteği
         const response = await axios.put(`${API_BASE_URL}/blogs/${id}`, updatedData, config);
         return response.data;
     } catch (error) {

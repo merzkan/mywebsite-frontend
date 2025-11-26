@@ -5,7 +5,6 @@ const BlogDetail = () => {
   const { id } = useParams();
   const { allBlogs, loading, error } = useBlogContext();
   
-  // ID'ye göre ilgili blogu bul
   const blog = allBlogs.find(b => b._id === id);
 
   if (loading) {
@@ -28,7 +27,6 @@ const BlogDetail = () => {
       {/* --- KAPAK GÖRSELİ --- */}
       <div className="h-[400px] w-full relative bg-gray-900">
         <img 
-          // DÜZELTME 1: Veritabanındaki resim varsa onu kullan, yoksa varsayılanı
           src={coverImageUrl || "/project.avif"} 
           alt={title} 
           className="w-full h-full object-cover opacity-60"
@@ -41,7 +39,6 @@ const BlogDetail = () => {
             {title}
           </h1>
           <div className="flex items-center text-gray-200 mt-6 space-x-4">
-            {/* DÜZELTME 2: Tarihi gün/ay/yıl formatına çevirdik */}
             <span className="flex items-center">
                 <span className="mr-2">🗓</span> {new Date(createdAt).toLocaleDateString('tr-TR')}
             </span>
@@ -67,7 +64,6 @@ const BlogDetail = () => {
             </div>
           </div>
 
-          {/* --- MAKALE İÇERİĞİ (DÜZELTİLEN KISIM) --- */}
           {/* dangerouslySetInnerHTML sayesinde <p>, <b> gibi etiketler düzgün görünür */}
           <article 
             className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed"

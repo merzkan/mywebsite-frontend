@@ -3,19 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { getUsers } from '../../api/userApi';
 
 const UserList = () => {
-  const [users, setUsers] = useState([]); // Kullanıcıları tutacak kutu
-  const [loading, setLoading] = useState(true); // Yükleniyor mu?
+  const [users, setUsers] = useState([]); 
+  const [loading, setLoading] = useState(true); 
 
-  // 2. Sayfa açılınca verileri çek
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getUsers(); // Servise git, veriyi al
-        setUsers(data); // Kutuyu doldur
+        const data = await getUsers(); 
+        setUsers(data); 
       } catch (error) {
         console.log("Hata:", error);
       } finally {
-        setLoading(false); // Yükleme bitti
+        setLoading(false); 
       }
     };
 
@@ -46,13 +45,10 @@ const UserList = () => {
             {users.map((user) => (
               <tr key={user._id} className="hover:bg-gray-50 transition border-b last:border-0">
                 
-                {/* user.username backend'den geliyor */}
                 <td className="p-4 font-medium text-gray-800">{user.username}</td>
                 
-                {/* user.name ve user.surname backend'den geliyor */}
                 <td className="p-4 text-gray-600">{user.name} {user.surname}</td>
                 
-                {/* user.email backend'den geliyor */}
                 <td className="p-4 text-gray-500 text-sm">{user.email}</td>
                 
                 <td className="p-4">

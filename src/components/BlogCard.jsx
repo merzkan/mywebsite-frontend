@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 const BlogCard = ({ blog }) => {
   const {_id, title, category, summary, author, readingTime, coverImageUrl, createdAt } = blog;
   
-  // Tarihi okunabilir formata çeviriyoruz (Örn: 24.11.2025)
   const formattedDate = new Date(createdAt).toLocaleDateString('tr-TR');
 
   return (
@@ -13,7 +12,6 @@ const BlogCard = ({ blog }) => {
         {/* Resim Alanı */}
         <div className="h-48 overflow-hidden">
           <img 
-            // DÜZELTME 1: Veritabanındaki resmi kullan, yoksa varsayılan Unsplash resmini göster
             src={"https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"} 
             alt={title} 
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -25,7 +23,6 @@ const BlogCard = ({ blog }) => {
             <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-semibold">
               {category}
             </span>
-            {/* DÜZELTME 2: Tarih formatlandı */}
             <span className="flex items-center gap-1">
                🗓 {formattedDate}
             </span>
@@ -41,7 +38,6 @@ const BlogCard = ({ blog }) => {
           
           <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
             <div className="flex items-center space-x-2">
-              {/* DÜZELTME 3: Yazarın baş harflerini dinamik yaptık */}
               <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold uppercase">
                 {author?.initials || "Y"}
               </div>

@@ -6,7 +6,6 @@ const Register = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
   const navigate = useNavigate();
 
-  // Form verileri
   const [formData, setFormData] = useState({
     username: '', 
     name: '',     
@@ -16,7 +15,6 @@ const Register = () => {
     confirmPassword: ''
   });
 
-  // Yükleniyor ve Hata durumları
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -25,18 +23,16 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-    // Kullanıcı bir şeye basarsa hatayı temizle
     if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // 1. Yükleniyor'u başlat
+    setLoading(true); 
 
-    // --- Validasyonlar ---
     if (!formData.username || !formData.name || !formData.surname || !formData.email || !formData.password) {
       setError('Lütfen tüm alanları doldurunuz.');
-      setLoading(false); // Hata varsa yükleniyor'u durdur
+      setLoading(false); 
       return;
     }
     if (formData.password !== formData.confirmPassword) {
@@ -51,8 +47,7 @@ const Register = () => {
     }
 
     try {
-      // --- Backend İsteği ---
-      await axios.post(`${API_BASE_URL}/auth/login/register`, {
+      await axios.post(`${API_BASE_URL}/auth/register`, {
         username: formData.username,
         name: formData.name,
         surname: formData.surname,
@@ -62,12 +57,12 @@ const Register = () => {
 
       alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.");
       navigate("/login");
-      setLoading(false); // İşlem bitti, normale dön
+      setLoading(false); 
 
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || "Kayıt başarısız.");
-      setLoading(false); // Hata olsa bile butonu tekrar aktif et
+      setLoading(false); 
     }
   };
 
@@ -164,19 +159,18 @@ const Register = () => {
             />
           </div>
 
-          {/* --- İŞTE GÜNCELLENEN BUTON --- */}
+          
           <button 
             type="submit"
-            disabled={loading} // Yüklenirken tıklamayı engeller
+            disabled={loading} 
             className={`w-full py-3 rounded-lg font-semibold text-white transition shadow-md ${
               loading 
-                ? 'bg-gray-400 cursor-not-allowed' // Yüklenirken gri
-                : 'bg-blue-600 hover:bg-blue-700'  // Normalde mavi
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-blue-600 hover:bg-blue-700'  
             }`}
           >
             {loading ? "İşleniyor..." : "Hesap Oluştur"}
           </button>
-          {/* ----------------------------- */}
 
         </form>
 

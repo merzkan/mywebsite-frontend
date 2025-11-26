@@ -11,7 +11,6 @@ const BlogSetting = () => {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
-  // Form State
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -19,7 +18,7 @@ const BlogSetting = () => {
     content: '', 
     coverImageUrl: '',
     readingTime: '',
-    isPublished: true // Varsayılan olarak true
+    isPublished: true 
   });
 
   const config = {
@@ -31,7 +30,6 @@ const BlogSetting = () => {
     }
   };
 
-  // 1. Verileri Çekme
   const fetchBlogs = async () => {
     try {
       const data = await getBlogs();
@@ -47,7 +45,6 @@ const BlogSetting = () => {
     fetchBlogs();
   }, []);
 
-  // 2. Input Değişimleri (Checkbox desteği ile)
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -60,7 +57,6 @@ const BlogSetting = () => {
     setFormData(prev => ({ ...prev, content: newContent }));
   };
 
-  // 3. Ekleme Modu
   const openModalForCreate = () => {
     setEditingId(null);
     setFormData({
@@ -70,12 +66,11 @@ const BlogSetting = () => {
         content: '', 
         coverImageUrl: '', 
         readingTime: '', 
-        isPublished: true // Yeni yazı varsayılan olarak yayında olsun
+        isPublished: true 
     });
     setIsModalOpen(true);
   };
 
-  // 4. Düzenleme Modu
   const handleEditClick = (blog) => {
     setEditingId(blog._id);
     
@@ -86,13 +81,12 @@ const BlogSetting = () => {
         content: blog.content,
         coverImageUrl: blog.coverImageUrl || '',
         readingTime: blog.readingTime || '',
-        isPublished: blog.isPublished // Mevcut durum neyse o gelsin
+        isPublished: blog.isPublished
     });
 
     setIsModalOpen(true);
   };
 
-  // 5. Silme İşlemi
   const handleDeleteClick = async (id) => {
     if (window.confirm("Bu blog yazısını silmek istediğinize emin misiniz?")) {
         try {
@@ -105,13 +99,11 @@ const BlogSetting = () => {
     }
   };
 
-  // 6. Form Gönderme
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
     try {
-      // LocalStorage'dan kullanıcı bilgisini al (Author için)
       const currentUser = JSON.parse(localStorage.getItem("user")) || {};
       const initials = `${currentUser.name?.[0] || ''}${currentUser.surname?.[0] || ''}`.toUpperCase();
 

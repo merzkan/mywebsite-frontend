@@ -6,7 +6,6 @@ const ProjectCard = ({project}) => {
     <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 group">
       {/* Proje Görseli */}
       <div className="relative h-56 overflow-hidden bg-gray-800">
-        {/* Overlay (Üzerine gelince kararır) */}
         <div className="absolute inset-0 bg-black opacity-20 group-hover:opacity-10 transition-opacity z-10"></div>
         <img 
           src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 

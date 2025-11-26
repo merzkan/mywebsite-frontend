@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState(''); // Başarı mesajı için
+  const [message, setMessage] = useState(''); 
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -15,14 +15,11 @@ const ForgotPassword = () => {
       return;
     }
 
-    // Simülasyon: Backend'e istek atılmış gibi davranıyoruz
     setError('');
     console.log('Sıfırlama isteği gönderildi:', email);
     
-    // Başarı mesajı göster
     setMessage('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi! Lütfen kutunuzu kontrol edin.');
     
-    // İsteğe bağlı: Inputu temizle
     setEmail('');
   };
 

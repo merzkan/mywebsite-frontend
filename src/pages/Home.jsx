@@ -9,12 +9,9 @@ const Home = () => {
   const { allBlogs, loading: loadingBlogs, error: errorBlogs } = useBlogContext();
   const isLoading = loadingProjects || loadingBlogs;
 
-  // --- DEĞİŞİKLİK BURADA ---
-  // 1. Önce verileri filtrele (Sadece yayınlananlar)
   const publishedProjects = allProjects ? allProjects.filter(p => p.isPublished === true) : [];
   const publishedBlogs = allBlogs ? allBlogs.filter(b => b.isPublished === true) : [];
 
-  // 2. Filtrelenmiş listeden ilk 3 tanesini al
   const latestProjects = publishedProjects.slice(0, 3);
   const latestBlogs = publishedBlogs.slice(0, 3);
   // -------------------------

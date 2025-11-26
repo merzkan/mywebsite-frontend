@@ -5,8 +5,6 @@ import { useProjectContext } from '../../context/ProjectContext';
 const Project = () => {
   const { allProjects, loading, error } = useProjectContext();
 
-  // --- DEĞİŞİKLİK BURADA BAŞLIYOR ---
-  // Gelen tüm projelerden sadece isPublished: true olanları süzüyoruz.
   const publishedProjects = allProjects.filter(project => project.isPublished === true);
   // -----------------------------------
 

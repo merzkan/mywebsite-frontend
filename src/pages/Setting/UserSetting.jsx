@@ -12,9 +12,6 @@ const UserSetting = () => {
     about: ''
   });
 
-  // previewImage state'ini kaldırdık çünkü artık değiştirme yapmıyoruz.
-  // Resim kaynağını aşağıda img etiketine doğrudan vereceğiz.
-  
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -36,7 +33,6 @@ const UserSetting = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // handleImageChange fonksiyonunu kaldırdık (dosya seçimi yok).
 
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -84,26 +80,18 @@ const UserSetting = () => {
         {/* İçerik Alanı */}
         <div className="flex flex-col md:flex-row">
             
-            {/* SOL TARAF: Sadece Profil Fotoğrafı ve İsim (Yükleme butonu kaldırıldı) */}
             <div className="w-full md:w-1/3 bg-gray-50 p-6 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-200">
               <div className="relative group">
-                {/* Resim kaynağına (src) sabit bir link veya kullanıcının mevcut fotosunu koyabilirsin */}
                 <img 
                   src="https://via.placeholder.com/150" 
                   alt="Profil" 
                   className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-md"
                 />
-                
-                {/* BURADAKİ LABEL, INPUT VE SVG İKONLARI KALDIRILDI */}
               </div>
-              
               <h3 className="mt-4 font-bold text-gray-800 text-lg">{formData.name} {formData.surname}</h3>
               <p className="text-sm text-gray-500">{formData.title}</p>
-              
-              {/* "Fotoğrafı değiştirmek için..." yazısı da kaldırıldı */}
             </div>
 
-            {/* SAĞ TARAF: FORM BİLGİLERİ (Aynen korundu) */}
             <div className="w-full md:w-2/3 p-6 sm:p-8">
               
               {message.text && (

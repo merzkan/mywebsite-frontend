@@ -11,7 +11,6 @@ const ProjectSetting = () => {
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
-  // Form State
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -21,7 +20,7 @@ const ProjectSetting = () => {
     liveDemoUrl: '',
     githubUrl: '',
     feature: '',
-    isPublished: true // Varsayılan olarak true
+    isPublished: true 
   });
 
   const config = {
@@ -33,7 +32,6 @@ const ProjectSetting = () => {
     }
   };
 
-  // 1. Projeleri Getir
   const fetchProjects = async () => {
     try {
       const data = await getProjects();
@@ -49,7 +47,6 @@ const ProjectSetting = () => {
     fetchProjects();
   }, []);
 
-  // 2. Input Değişimi (Checkbox Desteği Eklendi)
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -58,12 +55,10 @@ const ProjectSetting = () => {
     }));
   };
 
-  // Jodit Değişimi
   const handleEditorChange = (newContent) => {
     setFormData(prev => ({ ...prev, description: newContent }));
   };
 
-  // 3. Yeni Ekleme Modu
   const openModalForCreate = () => {
     setEditingId(null);
     setFormData({
@@ -73,23 +68,20 @@ const ProjectSetting = () => {
         description: '', 
         technologies: '', 
         liveDemoUrl: '', 
-        githubUrl: 'https://github.com/merzkan', // Varsayılan Link
+        githubUrl: 'https://github.com/merzkan', 
         feature: '',
-        isPublished: true // Yeni proje varsayılan olarak yayında
+        isPublished: true 
     });
     setIsModalOpen(true);
   };
 
-  // 4. Düzenleme Modu
   const handleEditClick = (project) => {
     setEditingId(project._id);
     
-    // Array -> String Çevirimi (Technologies)
     const techString = project.technologies 
         ? project.technologies.map(t => t.name).join(', ') 
         : '';
 
-    // Array -> String Çevirimi (Features)
     const featureString = project.feature 
         ? project.feature.map(f => f.name).join(', ') 
         : '';
@@ -103,13 +95,12 @@ const ProjectSetting = () => {
         liveDemoUrl: project.liveDemoUrl || '',
         githubUrl: project.githubUrl || '', 
         feature: featureString,
-        isPublished: project.isPublished // Mevcut durum neyse o gelsin
+        isPublished: project.isPublished 
     });
 
     setIsModalOpen(true);
   };
 
-  // 5. Silme
   const handleDeleteClick = async (id) => {
     if (window.confirm("Bu projeyi silmek istediğinize emin misiniz?")) {
         try {
@@ -122,19 +113,16 @@ const ProjectSetting = () => {
     }
   };
 
-  // 6. Kaydetme (Submit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
     try {
-      // String -> Array Çevirimi (Technologies)
       const technologiesArray = formData.technologies
         .split(',')
         .map(item => ({ name: item.trim() }))
         .filter(item => item.name !== '');
 
-      // String -> Array Çevirimi (Features)
       const featuresArray = formData.feature
         .split(',')
         .map(item => ({ name: item.trim() })) 
@@ -186,7 +174,7 @@ const ProjectSetting = () => {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider">
-              <th className="p-4 border-b">Durum</th> {/* Yeni Kolon */}
+              <th className="p-4 border-b">Durum</th> 
               <th className="p-4 border-b">Proje Başlığı</th>
               <th className="p-4 border-b">Kategori</th>
               <th className="p-4 border-b">Teknolojiler</th>
@@ -196,7 +184,6 @@ const ProjectSetting = () => {
           <tbody>
             {projects.map((project) => (
               <tr key={project._id} className="hover:bg-gray-50 transition border-b last:border-0">
-                {/* Durum Göstergesi */}
                 <td className="p-4">
                     {project.isPublished ? (
                         <span className="bg-green-100 text-green-700 py-1 px-3 rounded-full text-xs font-bold border border-green-200">Yayında</span>

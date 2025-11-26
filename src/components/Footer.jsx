@@ -20,7 +20,6 @@ const Footer = () => {
           {/* 2. Kolon: Hızlı Linkler */}
           <div>
             <h3 className="text-lg font-semibold mb-4 border-b-2 border-blue-500 inline-block pb-1">Hızlı Linkler</h3>
-            {/* DÜZELTME: <a> yerine <Link> kullanıldı */}
             <ul className="space-y-2 text-gray-400">
               <li><Link to="/" className="hover:text-blue-400 transition">Ana Sayfa</Link></li>
               <li><Link to="/blog" className="hover:text-blue-400 transition">Yazılar</Link></li>

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// --- 1. CONTEXTLERİ IMPORT EDİYORUZ ---
 import { useProjectContext } from '../../context/ProjectContext';
 import { useBlogContext } from '../../context/BlogContext';
+import { getUsers } from '../../api/userApi';
 
 import ProjectSetting from './ProjectSetting';
 import BlogSetting from './BlogSetting';
@@ -11,14 +11,28 @@ import UserList from './UserList';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('projects'); 
+  const [userCount, setUserCount] = useState(0);
   const navigate = useNavigate();
 
-  // --- 2. VERİLERİ ÇEKİYORUZ ---
-  // Context içinden tüm proje ve blog listesini alıyoruz
   const { allProjects } = useProjectContext();
   const { allBlogs } = useBlogContext();
+  
 
   const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    const fetchUserCount = async () => {
+      try {
+        const usersData = await getUsers();
+        if (Array.isArray(usersData)) {
+            setUserCount(usersData.length);
+        }
+      } catch (error) {
+        console.error("Kullanıcı sayısı alınamadı:", error);
+      }
+    };
+
+    fetchUserCount();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -64,13 +78,11 @@ const Dashboard = () => {
       {/* SAĞ İÇERİK ALANI */}
       <main className="flex-1 p-6 md:p-10 overflow-y-auto">
         
-        {/* --- 3. KARTLARI GÜNCELLİYORUZ --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           
           {/* Proje Kartı */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h3 className="text-gray-500 text-sm font-medium">Toplam Proje</h3>
-            {/* Statik '12' yerine dinamik uzunluğu yazıyoruz */}
             <p className="text-3xl font-bold text-gray-800 mt-2">
                 {allProjects ? allProjects.length : 0}
             </p>
@@ -79,16 +91,15 @@ const Dashboard = () => {
           {/* Blog Kartı */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h3 className="text-gray-500 text-sm font-medium">Toplam Blog</h3>
-            {/* Statik '45' yerine dinamik uzunluğu yazıyoruz */}
             <p className="text-3xl font-bold text-gray-800 mt-2">
                 {allBlogs ? allBlogs.length : 0}
             </p>
           </div>
 
-          {/* Ziyaretçi Kartı (Burası şimdilik statik kalabilir veya Google Analytics verisi bağlanabilir) */}
+          {/* Ziyaretçi Kartı  */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-gray-500 text-sm font-medium">Ziyaretçi</h3>
-            <p className="text-3xl font-bold text-gray-800 mt-2">1.2K</p>
+            <h3 className="text-gray-500 text-sm font-medium">Kullanıcı sayısı</h3>
+            <p className="text-3xl font-bold text-gray-800 mt-2">{userCount}</p>
           </div>
         </div>
 

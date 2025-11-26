@@ -19,7 +19,6 @@ const ProjectDetail = () => {
     return <div className="text-center py-40 text-gray-600">Proje bilgisi yok.</div>;
   }
 
-  // coverImageUrl veritabanında yoksa bile kodun hata vermez, varsayılanı kullanır.
   const { title, category, description, technologies, liveDemoUrl, githubUrl, feature, coverImageUrl,summary } = project;
 
   return (
@@ -28,7 +27,6 @@ const ProjectDetail = () => {
       {/* --- ÜST GÖRSEL (HERO) --- */}
       <div className="h-[400px] w-full relative bg-gray-900">
         <img 
-          // DÜZELTME 1: Varsa veritabanındaki görseli, yoksa varsayılanı kullan
           src={coverImageUrl || "/project.avif"}  
           alt={title} 
           className="w-full h-full object-cover opacity-40"
@@ -61,10 +59,8 @@ const ProjectDetail = () => {
       <div className="container mx-auto px-4 max-w-4xl -mt-20 relative z-10">
         <div className="bg-white rounded-xl shadow-xl p-8 md:p-12 border border-gray-100">
           
-          {/* --- PROJE HAKKINDA (DÜZELTME 2) --- */}
           <div className="mb-10">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Proje Hakkında</h2>
-            {/* HTML Etiketlerini (Jodit Çıktısını) Düzgün Gösterme */}
             <div 
                 className="prose prose-lg prose-blue max-w-none text-gray-600 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: description }}

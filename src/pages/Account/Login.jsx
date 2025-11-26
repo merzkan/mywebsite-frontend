@@ -8,7 +8,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // "email" yerine genel bir isim olan "identifier" (tanımlayıcı) kullanıyoruz
   const [identifier, setIdentifier] = useState(""); 
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,7 +19,6 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // Backend'e "identifier" adıyla gönderiyoruz
       const res = await axios.post(`${API_BASE_URL}/auth/login`, {
         identifier: identifier, 
         password: password,
@@ -61,11 +59,11 @@ const Login = () => {
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-6">
           
-          {/* DEĞİŞİKLİK BURADA: E-posta veya Kullanıcı Adı */}
+          {/*E-posta veya Kullanıcı Adı */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">E-posta veya Kullanıcı Adı</label>
             <input 
-              type="text" // 'email' yerine 'text' yaptık ki kullanıcı adı da yazılabilsin
+              type="text" 
               placeholder="kullaniciadi veya ornek@mail.com" 
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
               onChange={(e) => setIdentifier(e.target.value)}
