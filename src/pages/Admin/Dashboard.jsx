@@ -35,7 +35,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white">
       
       {/* SOL MENÜ (SIDEBAR) */}
       <aside className="w-full md:w-64 bg-gray-900 text-white flex-shrink-0">
