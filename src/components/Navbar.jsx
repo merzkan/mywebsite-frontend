@@ -41,7 +41,7 @@ const Navbar = () => {
         
         {/* LOGO */}
         <Link to="/" className="text-2xl font-bold tracking-wider cursor-pointer flex items-center gap-2">
-          <img src="/logo.png" alt="" className='w-10 md:w-10 transition-all duration-300 hover:scale-110 hover:-rotate-12 hover:drop-shadow-[0_0_10px_rgba(238,129,50,0.8)]'/>Merzkan
+          <img src="/logo.WebP" alt="" className='w-10 md:w-10 transition-all duration-300 hover:scale-110 hover:-rotate-12 hover:drop-shadow-[0_0_10px_rgba(238,129,50,0.8)]'/>Merzkan
         </Link>
 
         {/* --- DESKTOP MENÜ --- */}
