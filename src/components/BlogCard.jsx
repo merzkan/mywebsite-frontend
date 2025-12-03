@@ -63,7 +63,7 @@ const BlogCard = ({ blog }) => {
                   {author?.name || "Anonim"}
               </span>
             </div>
-            <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
+            <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
               ⏱ {readingTime}
             </span>
           </div>

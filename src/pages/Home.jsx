@@ -75,7 +75,7 @@ const Home = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <Link to="/project" className="px-8 py-4 bg-sky-600 text-white font-bold rounded-xl hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-500/20 transition duration-300">
+              <Link to="/project" className="px-8 py-4 bg-sky-700 text-white font-bold rounded-xl hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-500/20 transition duration-300">
                 Projelerimi İncele
               </Link>
               <Link to="/blog" className="px-8 py-4 bg-slate-800 border border-slate-700 text-slate-300 font-medium rounded-xl hover:bg-slate-700 hover:text-white transition duration-300">
