@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { updateUser } from '../../api/userApi';
 
 const UserSetting = () => {
@@ -67,76 +66,121 @@ const UserSetting = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 flex justify-center">
+    // DEĞİŞİKLİK 1: Zemin Slate-900
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-900 py-8 px-4 sm:px-6 lg:px-8 flex justify-center selection:bg-sky-500 selection:text-white">
       
-      <div className="max-w-5xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col">
+      {/* DEĞİŞİKLİK 2: Kart Slate-800 */}
+      <div className="max-w-5xl w-full bg-slate-800 rounded-2xl shadow-xl shadow-black/20 overflow-hidden flex flex-col border border-slate-700/50">
         
-        {/* Başlık Alanı */}
-        <div className="bg-gray-900 px-6 py-4 sm:px-8 sm:py-5">
-            <h1 className="text-xl sm:text-2xl font-bold text-white">Hesap Ayarları</h1>
-            <p className="text-gray-400 text-xs sm:text-sm mt-1">Profil bilgilerinizi buradan yönetebilirsiniz.</p>
+        {/* Başlık Alanı - Slate-950 */}
+        <div className="bg-slate-950 px-6 py-4 sm:px-8 sm:py-5 border-b border-slate-700/50">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-100">Hesap Ayarları</h1>
+            <p className="text-slate-400 text-xs sm:text-sm mt-1">Profil bilgilerinizi buradan yönetebilirsiniz.</p>
         </div>
 
         {/* İçerik Alanı */}
         <div className="flex flex-col md:flex-row">
             
-            <div className="w-full md:w-1/3 bg-gray-50 p-6 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-200">
+            {/* Sol Taraf (Profil Özeti) - Slate-900/30 */}
+            <div className="w-full md:w-1/3 bg-slate-900/30 p-6 flex flex-col items-center border-b md:border-b-0 md:border-r border-slate-700/50">
               <div className="relative group">
                 <img 
                   src="https://via.placeholder.com/150" 
                   alt="Profil" 
-                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-md"
+                  // Profil resmi kenarlığı Slate-700
+                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-slate-700 shadow-md group-hover:border-sky-500 transition-colors duration-300"
                 />
               </div>
-              <h3 className="mt-4 font-bold text-gray-800 text-lg">{formData.name} {formData.surname}</h3>
-              <p className="text-sm text-gray-500">{formData.title}</p>
+              <h3 className="mt-4 font-bold text-slate-100 text-lg">{formData.name} {formData.surname}</h3>
+              <p className="text-sm text-sky-400 font-medium">{formData.title}</p>
             </div>
 
+            {/* Sağ Taraf (Form) */}
             <div className="w-full md:w-2/3 p-6 sm:p-8">
               
               {message.text && (
-                <div className={`mb-4 p-3 rounded text-sm ${message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                <div className={`mb-4 p-3 rounded-lg text-sm border ${message.type === 'success' ? 'bg-green-500/10 text-green-200 border-green-500/20' : 'bg-red-500/10 text-red-200 border-red-500/20'}`}>
                   {message.text}
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">Ad</label>
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                    <label className="block text-xs font-semibold text-slate-400 mb-1">Ad</label>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleChange} 
+                        className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition-all placeholder-slate-600" 
+                    />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">Soyad</label>
-                    <input type="text" name="surname" value={formData.surname} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                    <label className="block text-xs font-semibold text-slate-400 mb-1">Soyad</label>
+                    <input 
+                        type="text" 
+                        name="surname" 
+                        value={formData.surname} 
+                        onChange={handleChange} 
+                        className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition-all placeholder-slate-600" 
+                    />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">Kullanıcı Adı</label>
-                    <input type="text" value={formData.username} disabled className="w-full px-3 py-2 border rounded-lg bg-gray-100 text-gray-500 text-sm cursor-not-allowed" />
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Kullanıcı Adı (Değiştirilemez)</label>
+                    <input 
+                        type="text" 
+                        value={formData.username} 
+                        disabled 
+                        className="w-full px-3 py-2 border border-slate-800 rounded-lg bg-slate-900 text-slate-500 text-sm cursor-not-allowed opacity-70" 
+                    />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">E-posta</label>
-                    <input type="email" value={formData.email} disabled className="w-full px-3 py-2 border rounded-lg bg-gray-100 text-gray-500 text-sm cursor-not-allowed" />
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">E-posta (Değiştirilemez)</label>
+                    <input 
+                        type="email" 
+                        value={formData.email} 
+                        disabled 
+                        className="w-full px-3 py-2 border border-slate-800 rounded-lg bg-slate-900 text-slate-500 text-sm cursor-not-allowed opacity-70" 
+                    />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Ünvan / Meslek</label>
-                  <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Örn: Yazılım Mühendisi" className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" />
+                  <label className="block text-xs font-semibold text-slate-400 mb-1">Ünvan / Meslek</label>
+                  <input 
+                    type="text" 
+                    name="title" 
+                    value={formData.title} 
+                    onChange={handleChange} 
+                    placeholder="Örn: Yazılım Mühendisi" 
+                    className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition-all placeholder-slate-600" 
+                  />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Hakkımda</label>
-                  <textarea name="about" rows="3" value={formData.about} onChange={handleChange} placeholder="Kendinizden bahsedin..." className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none"></textarea>
+                  <label className="block text-xs font-semibold text-slate-400 mb-1">Hakkımda</label>
+                  <textarea 
+                    name="about" 
+                    rows="4" 
+                    value={formData.about} 
+                    onChange={handleChange} 
+                    placeholder="Kendinizden bahsedin..." 
+                    className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition-all resize-none placeholder-slate-600"
+                  ></textarea>
                 </div>
 
-                <div className="flex justify-end pt-2">
-                  <button type="submit" disabled={loading} className={`px-6 py-2.5 rounded-lg font-bold text-white text-sm shadow transition hover:scale-105 ${loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'}`}>
-                    {loading ? 'Kaydediliyor...' : 'Kaydet'}
+                <div className="flex justify-end pt-4 border-t border-slate-700/50">
+                  <button 
+                    type="submit" 
+                    disabled={loading} 
+                    className={`px-8 py-2.5 rounded-lg font-bold text-white text-sm shadow-lg transition-all hover:scale-105 ${loading ? 'bg-slate-600 cursor-not-allowed' : 'bg-sky-600 hover:bg-sky-500 hover:shadow-sky-500/30'}`}
+                  >
+                    {loading ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
                   </button>
                 </div>
 

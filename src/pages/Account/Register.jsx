@@ -67,19 +67,20 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white px-4 relative overflow-hidden">
+    // DEĞİŞİKLİK 1: Zemin Slate-900 ve Sky vurgular
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-slate-900 text-slate-300 px-4 relative overflow-hidden selection:bg-sky-500 selection:text-white">
       
-      {/* Arka plan süslemeleri */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Arka plan süslemeleri (Login.jsx ile uyumlu) */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* --- CAM EFEKTLİ KART (DAHA KOMPAKT) --- */}
-      {/* Padding p-8 yerine p-6 yapıldı, max-width biraz arttırıldı ki yan yana sığsınlar */}
-      <div className="max-w-lg w-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 relative z-10">
+      {/* --- CAM EFEKTLİ KART --- */}
+      {/* Slate-800 zemin, Slate-700 border */}
+      <div className="max-w-lg w-full bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl p-6 relative z-10 ring-1 ring-white/5">
         
-        {/* Başlık - Margin azaltıldı (mb-8 -> mb-4) */}
+        {/* Başlık */}
         <div className="text-center mb-5">
-          <h2 className="text-2xl font-bold text-white tracking-tight">Kayıt Ol</h2>
+          <h2 className="text-2xl font-bold text-slate-100 tracking-tight">Kayıt Ol</h2>
           <p className="text-slate-400 text-xs mt-1">Hemen hesabını oluştur.</p>
         </div>
 
@@ -89,7 +90,7 @@ const Register = () => {
           </div>
         )}
 
-        {/* Form - space-y-5 yerine space-y-3 kullanılarak sıkılaştırıldı */}
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-3">
           
           {/* Kullanıcı Adı */}
@@ -101,7 +102,8 @@ const Register = () => {
               value={formData.username}
               onChange={handleChange}
               placeholder="kullaniciadi" 
-              className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-slate-500 text-sm"
+              // Input: Karttan bir ton koyu (Slate-900/50) ve Sky Focus
+              className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition placeholder-slate-600 text-sm"
             />
           </div>
 
@@ -113,7 +115,7 @@ const Register = () => {
                 type="text" name="name"
                 value={formData.name} onChange={handleChange}
                 placeholder="Adınız" 
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-slate-500 text-sm"
+                className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition placeholder-slate-600 text-sm"
               />
             </div>
             <div>
@@ -122,7 +124,7 @@ const Register = () => {
                 type="text" name="surname"
                 value={formData.surname} onChange={handleChange}
                 placeholder="Soyadınız" 
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-slate-500 text-sm"
+                className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition placeholder-slate-600 text-sm"
               />
             </div>
           </div>
@@ -136,11 +138,11 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="ornek@mail.com" 
-              className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-slate-500 text-sm"
+              className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition placeholder-slate-600 text-sm"
             />
           </div>
 
-          {/* Şifreler Yanyana (Ekrana sığması için burayı da böldüm) */}
+          {/* Şifreler Yanyana */}
           <div className="grid grid-cols-2 gap-3">
             <div>
                 <label className="block text-xs font-medium text-slate-300 mb-1">Şifre</label>
@@ -150,7 +152,7 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••" 
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder-slate-500 text-sm"
+                className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 text-slate-200 rounded-lg focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition placeholder-slate-600 text-sm"
                 />
             </div>
             <div>
@@ -161,24 +163,24 @@ const Register = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••" 
-                className={`w-full px-3 py-2 bg-slate-800/50 border text-white rounded-lg focus:ring-2 outline-none transition placeholder-slate-500 text-sm ${
+                className={`w-full px-3 py-2 bg-slate-900/50 border text-slate-200 rounded-lg focus:ring-2 outline-none transition placeholder-slate-600 text-sm ${
                     error.includes('Parola') 
                     ? 'border-red-500/50 focus:border-red-500' 
-                    : 'border-slate-700 focus:ring-blue-500'
+                    : 'border-slate-700 focus:ring-sky-500/50 focus:border-sky-500'
                 }`}
                 />
             </div>
           </div>
 
-          {/* Buton */}
+          {/* Buton - Sky-600 */}
           <div className="pt-2">
             <button 
                 type="submit"
                 disabled={loading} 
-                className={`w-full py-3 rounded-xl font-bold text-white text-sm transition-all shadow-lg hover:shadow-blue-500/25 ${
+                className={`w-full py-3 rounded-xl font-bold text-white text-sm transition-all shadow-lg hover:shadow-sky-500/25 ${
                 loading 
                     ? 'bg-slate-700 cursor-not-allowed text-slate-400' 
-                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.98]'
+                    : 'bg-sky-600 hover:bg-sky-500 active:scale-[0.98]'
                 }`}
             >
                 {loading ? "İşleniyor..." : "Hesap Oluştur"}
@@ -187,9 +189,9 @@ const Register = () => {
 
         </form>
 
-        <div className="mt-5 pt-4 border-t border-white/5 text-center text-xs text-slate-400">
+        <div className="mt-5 pt-4 border-t border-slate-700/50 text-center text-xs text-slate-400">
           Zaten hesabın var mı? {' '}
-          <Link to="/login" className="text-blue-400 font-semibold hover:text-blue-300 hover:underline transition">
+          <Link to="/login" className="text-sky-400 font-semibold hover:text-sky-300 hover:underline transition">
             Giriş Yap
           </Link>
         </div>
