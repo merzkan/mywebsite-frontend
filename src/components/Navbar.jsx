@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext' // Context import edildi
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,22 +8,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const path = location.pathname;
 
-  // localStorage okuma işlemini güvenli hale getiriyoruz
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  // localStorage yerine Context kullanıyoruz
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null); // State'i güncelle
+    logout(); // Context'teki logout fonksiyonunu çağır
     setIsOpen(false);
     navigate("/login");
-    // window.location.reload(); // SPA performansını düşürdüğü için reload yerine state yönetimi tercih edilir, ancak auth yapına göre gerekirse açabilirsin.
   };
 
   const checkActive = (route) => {
@@ -48,7 +40,6 @@ const Navbar = () => {
     <nav className="bg-gray-900 text-white p-4 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         
-        {/* LOGO - LCP ve CLS Optimizasyonu yapıldı */}
         <Link to="/" className="text-2xl font-bold tracking-wider cursor-pointer flex items-center gap-2" aria-label="Merzkan Ana Sayfa">
           <img 
             src="/logo.png" 
@@ -88,15 +79,12 @@ const Navbar = () => {
               // Kullanıcı Giriş Yapmışsa
               <div className="flex items-center gap-4">
                 
-                {/* 1. İSİM (En Solda) */}
                 <span className="text-gray-300 text-sm font-medium select-none">
                   {user.username || user.name}
                 </span>
 
-                {/* 2. BUTONLAR GRUBU (Yan Yana ve Eşit Boyutlu) */}
                 <div className="flex items-center gap-2">
                     
-                    {/* Admin veya Ayarlar Butonu */}
                     {user.role === "admin" ? (
                       <Link 
                         to="/admin/dashboard" 
@@ -113,7 +101,6 @@ const Navbar = () => {
                       </Link>
                     )}
 
-                    {/* Çıkış Butonu */}
                     <button 
                       onClick={handleLogout}
                       type="button"
@@ -127,7 +114,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* --- MOBİL BUTON (Erişilebilirlik Düzeltmesi) --- */}
+        {/* --- MOBİL BUTON --- */}
         <button 
           type="button"
           className="md:hidden focus:outline-none text-gray-300 hover:text-white p-2" 

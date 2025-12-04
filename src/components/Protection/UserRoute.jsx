@@ -1,16 +1,10 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const UserRoute = ({ children }) => {
-  let user = null;
+  const { user, loading } = useAuth();
 
-  try {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      user = JSON.parse(storedUser);
-    }
-  } catch (error) {
-    localStorage.removeItem("user");
-  }
+  if (loading) return null;
 
   if (!user) {
     return <Navigate to="/login" replace />;

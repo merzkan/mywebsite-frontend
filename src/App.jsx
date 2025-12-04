@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/Account/ForgotPassword"
 import ScrollToTop from "./utilities/ScrollToTop"
 import { ProjectProvider } from './context/ProjectContext';
 import { BlogProvider } from './context/BlogContext'
+import { AuthProvider } from './context/AuthContext' // Yeni ekledik
 import Dashboard from "./pages/Admin/Dashboard"
 import PrivateRoute from './components/Protection/PrivateRoute'
 import PublicRoute from './components/Protection/PublicRoute'
@@ -21,62 +22,64 @@ import UserRoute from './components/Protection/UserRoute'
 
 function App() {
   return (
-    <ProjectProvider>
-      <BlogProvider>
-        <div className="flex flex-col min-h-screen bg-gray-50">
-          <ScrollToTop />
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              {/* --- HERKESE AÇIK SAYFALAR --- */}
-              <Route path="/" element={<Home />} />
-              <Route path="/blog" element={<Blog />} /> 
-              <Route path="/blog/:id" element={<BlogDetail />} /> 
-              <Route path="/project" element={<Project />} /> 
-              <Route path="/project/:id" element={<ProjectDetail />} /> 
-              <Route path="/about" element={<About />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              
-              <Route 
-                path="/setting" 
-                element={
-                  <UserRoute>
-                    <UserSetting />
-                  </UserRoute>
-                } 
-              />
+    <AuthProvider> {/* En dışa veya diğer providerların yanına ekledik */}
+      <ProjectProvider>
+        <BlogProvider>
+          <div className="flex flex-col min-h-screen bg-gray-50">
+            <ScrollToTop />
+            <Navbar />
+            <main className="flex-grow">
+              <Routes>
+                {/* --- HERKESE AÇIK SAYFALAR --- */}
+                <Route path="/" element={<Home />} />
+                <Route path="/blog" element={<Blog />} /> 
+                <Route path="/blog/:id" element={<BlogDetail />} /> 
+                <Route path="/project" element={<Project />} /> 
+                <Route path="/project/:id" element={<ProjectDetail />} /> 
+                <Route path="/about" element={<About />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                
+                <Route 
+                  path="/setting" 
+                  element={
+                    <UserRoute>
+                      <UserSetting />
+                    </UserRoute>
+                  } 
+                />
 
-              <Route 
-                path="/login" 
-                element={
-                  <PublicRoute>
-                    <Login />
-                  </PublicRoute>
-                } 
-              />
-              <Route 
-                path="/register" 
-                element={
-                  <PublicRoute>
-                    <Register />
-                  </PublicRoute>
-                } 
-              />
-              <Route 
-                path="/admin/dashboard" 
-                element={
-                  <PrivateRoute>
-                    <Dashboard />
-                  </PrivateRoute>
-                } 
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BlogProvider>
-    </ProjectProvider>
+                <Route 
+                  path="/login" 
+                  element={
+                    <PublicRoute>
+                      <Login />
+                    </PublicRoute>
+                  } 
+                />
+                <Route 
+                  path="/register" 
+                  element={
+                    <PublicRoute>
+                      <Register />
+                    </PublicRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/dashboard" 
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  } 
+                />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </BlogProvider>
+      </ProjectProvider>
+    </AuthProvider>
   )
 }
 

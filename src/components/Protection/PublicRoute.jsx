@@ -1,16 +1,11 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const PublicRoute = ({ children }) => {
-  let user = null;
+  const { user, loading } = useAuth();
 
-  try {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      user = JSON.parse(storedUser);
-    }
-  } catch (error) {
-    localStorage.removeItem("user");
-  }
+  // Yükleme sırasında beyaz ekran veya loader gösterebilirsin
+  if (loading) return null;
 
   if (user) {
     if (user.role === "admin") {
