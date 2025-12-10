@@ -74,7 +74,7 @@ const ProjectSetting = () => {
         description: '', 
         technologies: '', 
         liveDemoUrl: '', 
-        githubUrl: 'https://github.com/merzkan', 
+        githubUrl: '', 
         feature: '',
         isPublished: true 
     });
