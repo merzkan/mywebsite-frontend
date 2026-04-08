@@ -46,7 +46,7 @@ const Navbar = () => {
             alt="Merzkan Logo" 
             width="40" 
             height="40" 
-            fetchpriority="high"
+            fetchPriority="high"
             className='w-10 h-10 md:w-10 md:h-10 transition-all duration-300 hover:scale-110 hover:-rotate-12 hover:drop-shadow-[0_0_10px_rgba(238,129,50,0.8)] object-contain'
           />
           Merzkan
